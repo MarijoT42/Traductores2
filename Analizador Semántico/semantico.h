@@ -1,0 +1,62 @@
+#ifndef SEMANTICO_H
+#define SEMANTICO_H
+#pragma once
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <stack>
+#include <string>
+#include "sintactico.h"
+
+using namespace std;
+
+class Semantico {
+private:
+	Sintactico sint;
+	int variablesCont;
+	int indArg;
+	int indF;
+	int indV;
+	int funcionesCont;
+	string error;
+	bool variableGlobal(stack<ElementoPila*> nodo);
+	bool ListaVar(stack<ElementoPila*> nodo, string tipo, string ambito);
+	bool funcion(stack<ElementoPila*> nodo);
+	string parametros(stack<ElementoPila*> nodo, string ambito);
+	string listaParametros(stack<ElementoPila*> nodo, string ambito);
+	bool bloqFunc(stack<ElementoPila*> nodo, string ambito);
+	bool sentencia(stack<ElementoPila*> nodo, string ambito);
+	bool buscarSentencia(stack<ElementoPila*> nodo, string ambito);
+	bool expresion(stack<ElementoPila*> nodo, string ambito);
+	bool llamadaFunc(stack<ElementoPila*> nodo, string ambito);
+	bool argumentos(stack<ElementoPila*> nodo, string ambito);
+	bool listaArgumentos(stack<ElementoPila*> nodo, string ambito);
+	bool verificarArgumento(ElementoPila* argumento, string ambito);
+	bool usoVar(stack<ElementoPila*> nodo, string ambito);
+	bool asignacion(stack<ElementoPila*> nodo, string ambito);
+	bool verificarVariable(ElementoPila* variable, string ambito);
+	bool variableLocal(stack<ElementoPila*> nodo, string ambito);
+	void addVariable(string tipo, string variable, string ambito, string parametro);
+	void addFuncion(string tipo, string funcion, string parametros);
+public:
+	
+	string variables[100][4];
+	string funciones[100][3];
+	Semantico();
+	bool start(Sintactico sintat);
+	bool analizarNodo(ElementoPila* elemento);
+	bool encontrarFuncion(string nombre);
+	bool encontrarVariable(string nombre, string ambito);
+	int existenciaFuncion(string funcion);
+	int existenciaVariable(string variable, string ambito);
+	string getError();
+	string getVariableAt(int i, int j);
+	string getFuncionAt(int i, int j);
+	int getVarCont();
+	int getFuncCont();
+	void printFunciones();
+	void printVariables();
+	
+};
+#endif
